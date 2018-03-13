@@ -1,0 +1,4 @@
+#关闭spring-security进行身份验证
+security:
+  basic:
+    enabled: false

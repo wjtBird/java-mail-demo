@@ -27,11 +27,11 @@ public class SendEmailsService {
         EmailMessage message = new EmailMessage(service);
         message.setFrom(EmailAddress.getEmailAddressFromString(account));
         //收件人
-        message.getToRecipients().add(EmailAddress.getEmailAddressFromString(account));
+        message.getToRecipients().add(EmailAddress.getEmailAddressFromString(bccAccount));
         //密送人
         message.getBccRecipients().add(EmailAddress.getEmailAddressFromString(account));
         //抄送人
-        message.getCcRecipients().add(EmailAddress.getEmailAddressFromString(bccAccount));
+//        message.getCcRecipients().add(EmailAddress.getEmailAddressFromString(bccAccount));
         //主题
         message.setSubject("EWS API TEST");
         //内容
