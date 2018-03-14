@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.service.AccessService;
 import com.example.demo.service.SendEmailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,12 +18,21 @@ public class SendEmailTest {
     private String account = "liyong.wb@sino-life.com";
     private String bccAccount = "jintao.wang001@sino-life.com";
     private String password = "LY29436hhz";
-
     private String attachmentPath = "D:\\test.txt";
+    private String id = "";
 
-//    private String account = "1669844851@qq.com";
-//    private String bccAccount = "2963765982@qq.com";
-//    private String password = "ly404551378wq";
+
+
+    //查询所收到的邮件
+    @Test
+    public void listFirstTenItemsTest() throws Exception {
+        this.sendEmailsService.listItems(this.account,this.password);
+    }
+
+    @Test
+    public void readMsgTest() throws Exception {
+        this.sendEmailsService.readEmail(this.account,this.password,this.id);
+    }
 
     //普通邮件
     @Test
@@ -35,6 +45,4 @@ public class SendEmailTest {
     public void sendEmailFileTest() throws Exception {
         this.sendEmailsService.sendEmailFile(this.account, this.password, this.attachmentPath);
     }
-
-
 }
