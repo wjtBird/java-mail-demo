@@ -2,3 +2,7 @@
 security:
   basic:
     enabled: false
+
+spring:
+  thymeleaf:
+    cache: false
