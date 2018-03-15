@@ -1,16 +1,16 @@
 package com.example.demo.entity;
 
-import java.util.Date;
-
 public class EmailEntity {
 
+    private String id; //
     private String sender; //发件人
     private String addressee; //收件人
     private String cc; //抄送人
     private String bcc; //密送人
     private String subject; //主题
-    private Date dateTimeReceived; //接收时间
+    private String dateTimeReceived; //接收时间
     private String content; //内容
+    private String appendixAddress; //附件地址
     private boolean isRead; //是否已读
 
     public String getSender() {
@@ -29,11 +29,11 @@ public class EmailEntity {
         this.subject = subject;
     }
 
-    public Date getDateTimeReceived() {
+    public String getDateTimeReceived() {
         return dateTimeReceived;
     }
 
-    public void setDateTimeReceived(Date dateTimeReceived) {
+    public void setDateTimeReceived(String dateTimeReceived) {
         this.dateTimeReceived = dateTimeReceived;
     }
 
@@ -75,5 +75,21 @@ public class EmailEntity {
 
     public void setBcc(String bcc) {
         this.bcc = bcc;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAppendixAddress() {
+        return appendixAddress;
+    }
+
+    public void setAppendixAddress(String appendixAddress) {
+        this.appendixAddress = appendixAddress;
     }
 }

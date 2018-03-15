@@ -21,8 +21,6 @@ public class SendEmailTest {
     private String attachmentPath = "D:\\test.txt";
     private String id = "";
 
-
-
     //查询所收到的邮件
     @Test
     public void listFirstTenItemsTest() throws Exception {
@@ -35,10 +33,10 @@ public class SendEmailTest {
     }
 
     //普通邮件
-    @Test
-    public void sendMsgTest() throws Exception {
-        this.sendEmailsService.sendEmail(this.account, this.bccAccount,this.password);
-    }
+//    @Test
+//    public void sendMsgTest() throws Exception {
+//        this.sendEmailsService.sendEmail(this.account, this.bccAccount,this.password);
+//    }
 
     //带附件的邮件
     @Test

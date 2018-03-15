@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by ly on 2018/3/14.
  */
 public class TResult<T extends Object> implements Serializable {
-    // 错误码
+    // 错误码 200为成功 500为异常
     private int code;
     // 提示信息
     private String msg;
