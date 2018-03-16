@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>发邮件</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function ss() {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/sendEmail" ,//url
+                data: $('#form').serialize(),
+                success: function (data) {
+                    console.log(data);//打印服务端返回的数据(调试用)
+                    if (data.code == 200) {
+                        alert("发送成功");
+                    }
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <form id="form">
+                <div class="form-group">
+                    <label>收件人：</label><input class="form-control" name="addressee"  type="email" />
+                </div>
+                <div class="form-group">
+                    <label>抄送人：</label><input class="form-control" name="cc" type="email" />
+                </div>
+                <div class="form-group">
+                    <label>主题：</label><input class="form-control" name="subject" type="text" />
+                </div>
+                <div class="form-group">
+                    <label>内容：</label><textarea class="form-control" name="content" rows="3"></textarea>
+                </div>
+                <button class="btn btn-default" onclick="ss()">发送</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

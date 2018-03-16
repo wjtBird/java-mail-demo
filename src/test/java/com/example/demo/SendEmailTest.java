@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SendEmailTest {
@@ -21,8 +23,6 @@ public class SendEmailTest {
     private String attachmentPath = "D:\\test.txt";
     private String id = "";
 
-
-
     //查询所收到的邮件
     @Test
     public void listFirstTenItemsTest() throws Exception {
@@ -35,14 +35,28 @@ public class SendEmailTest {
     }
 
     //普通邮件
-    @Test
-    public void sendMsgTest() throws Exception {
-        this.sendEmailsService.sendEmail(this.account, this.bccAccount,this.password);
-    }
+//    @Test
+//    public void sendMsgTest() throws Exception {
+//        this.sendEmailsService.sendEmail(this.account, this.bccAccount,this.password);
+//    }
 
-    //带附件的邮件
+    //发送带附件的邮件
     @Test
     public void sendEmailFileTest() throws Exception {
         this.sendEmailsService.sendEmailFile(this.account, this.password, this.attachmentPath);
     }
+
+    //查询带附件的邮件
+    @Test
+    public void readFileMail() throws Exception {
+        this.sendEmailsService.readFileMail(this.account, this.password);
+    }
+
+    //查询带附件的邮件
+    @Test
+    public void readFileMails() throws Exception {
+        this.sendEmailsService.readFileMails(this.account, this.password);
+    }
+
+
 }
