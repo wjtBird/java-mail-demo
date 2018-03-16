@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 public class EmailEntity {
 
     private String id; //
@@ -10,7 +12,7 @@ public class EmailEntity {
     private String subject; //主题
     private String dateTimeReceived; //接收时间
     private String content; //内容
-    private String appendixAddress; //附件地址
+    List<EnclosureEntity> enclosureList; //附件
     private boolean isRead; //是否已读
 
     public String getSender() {
@@ -85,11 +87,11 @@ public class EmailEntity {
         this.id = id;
     }
 
-    public String getAppendixAddress() {
-        return appendixAddress;
+    public List<EnclosureEntity> getEnclosureList() {
+        return enclosureList;
     }
 
-    public void setAppendixAddress(String appendixAddress) {
-        this.appendixAddress = appendixAddress;
+    public void setEnclosureList(List<EnclosureEntity> enclosureList) {
+        this.enclosureList = enclosureList;
     }
 }

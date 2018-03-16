@@ -1,5 +1,6 @@
 package com.example.demo.web;
 
+import com.example.demo.core.web.BaseController;
 import com.example.demo.entity.EmailEntity;
 import com.example.demo.service.SendEmailsService;
 import com.example.utils.TResult;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class SendEmailController {
+public class SendEmailController extends BaseController {
 
     @Autowired
     private SendEmailsService sendEmailsService;
@@ -35,9 +36,9 @@ public class SendEmailController {
     public TResult show(){
         try {
             List<EmailEntity> emailEntities = sendEmailsService.listItems(this.account, this.password);
-            return new TResult(200,null,emailEntities);
+            return new TResult(SUCCESS,null,emailEntities);
         } catch (Exception e) {
-            return new TResult(500,e.getMessage(),null);
+            return new TResult(FAIL,e.getMessage(),null);
         }
     }
 
@@ -46,9 +47,9 @@ public class SendEmailController {
     public TResult readEmail(@RequestParam("id") String id){
         try {
             EmailEntity emailEntitiy= sendEmailsService.readEmail(this.account,this.password,id);
-            return new TResult(200,null,emailEntitiy);
+            return new TResult(SUCCESS,null,emailEntitiy);
         } catch (Exception e) {
-            return new TResult(500,e.getMessage(),null);
+            return new TResult(FAIL,e.getMessage(),null);
         }
     }
 
@@ -57,9 +58,9 @@ public class SendEmailController {
     public TResult sendEmail(EmailEntity emailEntity){
         try {
             sendEmailsService.sendEmail(this.account,this.password,emailEntity);
-            return new TResult(200,"发送成功",null);
+            return new TResult(SUCCESS,"发送成功",null);
         } catch (Exception e) {
-            return new TResult(500,e.getMessage(),null);
+            return new TResult(FAIL,e.getMessage(),null);
         }
     }
 }

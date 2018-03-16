@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg" style="width: 80%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -46,13 +46,14 @@
                         <p>发件人：<span id="sender"></span></p>
                         <p>收件人：<span id="addressee"></span></p>
                         <p>抄送：<span id="cc"></span></p>
+                        <p id="enclosure" style="border-top:1px solid #ddd;border-bottom:1px solid #ddd;width: 100%;padding: 5px"></p>
                     </div>
                     <div id="contents">
 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    <button type="button" class="btn btn-default" onclick="hideModal()">关闭
                     </button>
                     <!--<button type="button" class="btn btn-primary">-->
                     <!--提交更改-->
@@ -75,9 +76,11 @@
                 if (data != null) {
                     $.each(data.data, function (index, item) {
                         html += '<tr onclick="readEmail(' + index + ')">';
-                        html += '<td>' + item.sender + '<input type="hidden" id="ss' + index + '" value="' + item.id + '" /></td>';
-                        html += '<input type="hidden" id="addressee\' + index + \'" value="\' + item.addressee + \'" />';
-                        html += '<input type="hidden" id="cc\' + index + \'" value="\' + item.cc + \'" />';
+                        html += '<td>' + item.sender + '<input type="hidden" id="id' + index + '" value="' + item.id + '" />' +
+                            '<input type="hidden" id="addressee' + index + '" value="' + item.addressee + '" />' +
+                            '<input type="hidden" id="cc' + index + '" value="' + item.cc + '" />' +
+                            '<input type="hidden" id="sender' + index + '" value="' + item.sender + '" />' +
+                            '<input type="hidden" id="subject' + index + '" value="' + item.subject + '" /></td>';
                         html += "<td>" + item.subject + "</td>";
                         html += "<td>" + item.dateTimeReceived + "</td>";
                         if (item.isRead == true) {
@@ -97,26 +100,40 @@
 
     //获取邮件详情
     function readEmail(index) {
+        $("#cc").text($("#cc" + index).val());
+        $("#myModalLabel").text($("#subject" + index).val());
+        $("#addressee").text($("#addressee" + index).val());
+        $("#sender").text($("#sender" + index).val());
         $('#myModal').modal({
             backdrop: 'static'
         });
         $.ajax({
             type: "post",
             url: "/read",
-            data: {id: $("#ss" + index).val()},
+            data: {id: $("#id" + index).val()},
             success: function (data) {
                 // alert(JSON.stringify(data));
                 console.log(data);
                 if (data.data != null) {
-                    $("#myModalLabel").text(data.data.subject);
+                    var html = "";
                     $("#contents").html(data.data.content);
-                    $("#cc").text(data.data.cc);
-                    $("#addressee").text(data.data.addressee);
-                    $("#sender").text(data.data.sender);
+                    html +="附件：";
+                    $.each(data.data.enclosureList, function (index, item1) {
+                        html +='<span><a href="'+item1.appendixAddress+'">'+item1.fileName+'</a></span>';
+                    });
+                    $("#enclosure").html(html);
                 }
             }
         });
     }
+    //关闭模态框并清空数据
+    function hideModal() {
+        $('#myModal').modal('hide');
+        $("#contents").empty();
+        $("#enclosure").empty();
+    }
+
+
 </script>
 </body>
 </html>
