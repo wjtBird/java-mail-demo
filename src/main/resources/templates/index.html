@@ -119,7 +119,27 @@
                     $("#contents").html(data.data.content);
                     html +="附件：";
                     $.each(data.data.enclosureList, function (index, item1) {
-                        html +='<span><a href="'+item1.appendixAddress+'">'+item1.fileName+'</a></span>';
+                        html +='<span><a href="/download?fileName='+item1.fileName+'">'+item1.fileName+'</a></span>';
+                    });
+                    $("#enclosure").html(html);
+                }
+            }
+        });
+    }
+    function download() {
+        $.ajax({
+            type: "post",
+            url: "/read",
+            data: {id: $("#id" + index).val()},
+            success: function (data) {
+                // alert(JSON.stringify(data));
+                console.log(data);
+                if (data.data != null) {
+                    var html = "";
+                    $("#contents").html(data.data.content);
+                    html +="附件：";
+                    $.each(data.data.enclosureList, function (index, item1) {
+                        html +='<span><a href="/download">'+item1.fileName+'</a></span>';
                     });
                     $("#enclosure").html(html);
                 }

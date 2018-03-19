@@ -29,10 +29,10 @@ public class SendEmailTest {
         this.sendEmailsService.listItems(this.account,this.password);
     }
 
-    @Test
-    public void readMsgTest() throws Exception {
-        this.sendEmailsService.readEmail(this.account,this.password,this.id);
-    }
+//    @Test
+//    public void readMsgTest() throws Exception {
+//        this.sendEmailsService.readEmail(this.account,this.password,this.id);
+//    }
 
     //普通邮件
 //    @Test

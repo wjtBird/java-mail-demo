@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 public class EmailEntity {
@@ -13,6 +15,7 @@ public class EmailEntity {
     private String dateTimeReceived; //接收时间
     private String content; //内容
     List<EnclosureEntity> enclosureList; //附件
+    private MultipartFile file;
     private boolean isRead; //是否已读
 
     public String getSender() {
@@ -93,5 +96,13 @@ public class EmailEntity {
 
     public void setEnclosureList(List<EnclosureEntity> enclosureList) {
         this.enclosureList = enclosureList;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 }
