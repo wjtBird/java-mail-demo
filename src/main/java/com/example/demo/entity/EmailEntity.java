@@ -15,7 +15,7 @@ public class EmailEntity {
     private String dateTimeReceived; //接收时间
     private String content; //内容
     List<EnclosureEntity> enclosureList; //附件
-    private MultipartFile file;
+//    private MultipartFile[] files;
     private boolean isRead; //是否已读
 
     public String getSender() {
@@ -98,11 +98,5 @@ public class EmailEntity {
         this.enclosureList = enclosureList;
     }
 
-    public MultipartFile getFile() {
-        return file;
-    }
 
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
 }

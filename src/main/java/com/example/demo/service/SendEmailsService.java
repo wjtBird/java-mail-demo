@@ -16,7 +16,6 @@ import microsoft.exchange.webservices.data.core.service.schema.ItemSchema;
 import microsoft.exchange.webservices.data.property.complex.*;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 import microsoft.exchange.webservices.data.search.ItemView;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,7 +44,7 @@ public class SendEmailsService {
      * @param password 密码
      * @throws Exception
      */
-    public void sendEmail(String account,String password,EmailEntity emailEntity,String attachmentPath) throws Exception {
+    public void sendEmail(String account,String password,EmailEntity emailEntity,List<String> attachmentPaths) throws Exception {
         if (null != emailEntity){
             if ( null != account && null != emailEntity.getAddressee()
                     && null != password){
@@ -64,8 +63,10 @@ public class SendEmailsService {
                 //内容
                 message.setBody(MessageBody.getMessageBodyFromText(emailEntity.getContent()));
                 //附件地址
-                if (attachmentPath != null && !"".equals(attachmentPath)) {
-                    message.getAttachments().addFileAttachment(attachmentPath);
+                if (attachmentPaths != null && attachmentPaths.size()>0) {
+                    for (String attachmentPath:attachmentPaths){
+                        message.getAttachments().addFileAttachment(attachmentPath);
+                    }
                 }
                 message.send();
             }else {

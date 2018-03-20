@@ -23,7 +23,10 @@
                     <label>主题：</label><input class="form-control" name="subject" id="subject" type="text" />
                 </div>
                 <div class="form-group">
-                    <label>文件：</label><input class="form-control" name="file" id="file" type="file" />
+                    <label>文件：</label><input class="form-control" name="files" type="file" />
+                </div>
+                <div class="form-group">
+                    <label>文件：</label><input class="form-control" name="files" type="file" />
                 </div>
                 <div class="form-group">
                     <label>内容：</label><textarea class="form-control" name="content" id="content" rows="3"></textarea>
@@ -35,16 +38,21 @@
 </div>
 <script type="text/javascript">
     function send() {
-        var formData = new FormData();
-        var inputFile = $('#form').find('input[name="file"]')[0].files[0];
-        formData.append('addressee', $("#addressee").val());
-        formData.append('subject', $("#subject").val());
-        formData.append('cc', $("#cc").val());
-        formData.append('content', $("#content").val());
+        var formData = new FormData($('#form')[0]);
+        console.log(formData);
+        // var inputFile = $('#form').find('input[name="files"]')[0].files[0];
+        // var files = $('#form').find('input[name="files"]').prop('files');
+        // formData.append('addressee', $("#addressee").val());
+        // formData.append('subject', $("#subject").val());
+        // formData.append('cc', $("#cc").val());
+        // formData.append('content', $("#content").val());
+        // formData.append('files', files);
+        // console.log($('#form').serialize());
+        // alert(JSON.stringify(formData));
         // formData.append('comments', $("#addressee").val());
-        if (typeof(inputFile) != "undefined"){
-            formData.append('file', inputFile);
-        }
+        /*if (typeof(inputFile) != "undefined"){
+            formData.append('files', files);
+        }*/
         $.ajax({
             type: 'POST',
             url: "/sendEmail",
