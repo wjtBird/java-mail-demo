@@ -25,6 +25,7 @@ public class DocConverter {
 	private String fileName; // 文件名称
 	private File pdfFile; // pdf文件路径
 	private File docFile; // office文件路径
+	private File htmlFile; // html文件的路径
 
 	public DocConverter(String fileString) {
 		ini(fileString);
@@ -52,6 +53,7 @@ public class DocConverter {
 		fileName = fileString.substring(0, fileString.lastIndexOf("."));
 		docFile = new File(fileString);
 		pdfFile = new File(fileName+ ".pdf");
+		htmlFile = new File(fileName+ ".html");
 	}
 
 	/**
@@ -89,12 +91,46 @@ public class DocConverter {
 	}
 
 	/**
+	 *  转为html
+	 *
+	 */
+	private void doc2html() throws Exception {
+		if (docFile.exists()) {
+			if (!htmlFile.exists()) {
+				OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100);
+				try {
+					connection.connect();
+					DocumentConverter converter = new OpenOfficeDocumentConverter(connection);
+					converter.convert(docFile, htmlFile);
+					connection.disconnect();
+					LOGGER.info("****html转换成功，html输出： "+ htmlFile.getPath() + "****");
+				} catch (java.net.ConnectException e) {
+					e.printStackTrace();
+					LOGGER.info("****html转换器异常，openoffice 服务未启动！****");
+					throw e;
+				} catch (com.artofsolving.jodconverter.openoffice.connection.OpenOfficeException e) {
+					e.printStackTrace();
+					LOGGER.info("****html转换器异常，读取转换文件 失败****");
+					throw e;
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw e;
+				}
+			} else {
+				LOGGER.info("****已经转换为html，不需要再进行转化 ****");
+			}
+		} else {
+			LOGGER.info("****html转换器异常，需要转换的文档不存在， 无法转换****");
+		}
+	}
+
+	/**
 	 * * 转换主方法
 	 */
 	@SuppressWarnings("unused")
 	public void conver() {
 		try {
-			doc2pdf();
+			doc2html();
 		} catch (Exception e) {
 			  e.printStackTrace();
 		}
