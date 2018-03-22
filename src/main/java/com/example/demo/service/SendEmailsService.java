@@ -36,15 +36,15 @@ public class SendEmailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SendEmailsService.class);
 
-    private static final SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat dateFormater = new SimpleDateFormat("MM-dd");
 
     /**
-     * 发送普通形式邮件
+     * 发送带附件的邮件
      * @param account 发件人
      * @param password 密码
      * @throws Exception
      */
-    public void sendEmail(String account,String password,EmailEntity emailEntity) throws Exception {
+    public void sendEmail(String account,String password,EmailEntity emailEntity,List<String> attachmentPaths) throws Exception {
         if (null != emailEntity){
             if ( null != account && null != emailEntity.getAddressee()
                     && null != password){
@@ -62,6 +62,12 @@ public class SendEmailsService {
                 message.setSubject(emailEntity.getSubject());
                 //内容
                 message.setBody(MessageBody.getMessageBodyFromText(emailEntity.getContent()));
+                //附件地址
+                if (attachmentPaths != null && attachmentPaths.size()>0) {
+                    for (String attachmentPath:attachmentPaths){
+                        message.getAttachments().addFileAttachment(attachmentPath);
+                    }
+                }
                 message.send();
             }else {
                 throw new ParametersUnexpectedException("发件人、收件人、密码不能为空");
@@ -70,7 +76,7 @@ public class SendEmailsService {
     }
 
     /**
-     * 发送带附件的邮件
+     * 发送带附件的邮件 测试例子
      * @param account 发件人
      * @param password 密码
      * @param attachmentPath 附件地址
@@ -109,7 +115,7 @@ public class SendEmailsService {
             ExchangeUtil util = new ExchangeUtil();
             ExchangeService service = util.getService(account, password);
             Folder inbox = Folder.bind(service, WellKnownFolderName.Inbox);
-            ItemView view = new ItemView(10);
+            ItemView view = new ItemView(Integer.MAX_VALUE);
             FindItemsResults<Item> findResults = service.findItems(inbox.getId(), view);
             if(null != findResults){
               service.loadPropertiesForItems(findResults, PropertySet.FirstClassProperties);
@@ -152,8 +158,11 @@ public class SendEmailsService {
                     for (Attachment attachment:message.getAttachments()) {
                         if (attachment instanceof FileAttachment){
                             FileAttachment fileAttachment = (FileAttachment)attachment;
+                            // 创建文件
+                            File saveDir = new File("./files/" + fileAttachment.getName());
                             //保存附件
-                            fileAttachment.load("./src/main/resources/public/" + fileAttachment.getName());
+                            if (!saveDir.getParentFile().exists()) saveDir.getParentFile().mkdirs();
+                            fileAttachment.load("./files/" + fileAttachment.getName());
                         }else {
                             ItemAttachment itemAttachment = (ItemAttachment)attachment;
                             itemAttachment.load();
@@ -180,7 +189,7 @@ public class SendEmailsService {
      * @return
      * @throws Exception
      */
-    public EmailEntity readEmail(String account, String password, String id) throws Exception {
+    public EmailEntity readEmail(String account, String password, String id, String realPath) throws Exception {
         EmailEntity emailEntity = new EmailEntity();
         if (null != account && null != password && null != id){
             ExchangeUtil util = new ExchangeUtil();
@@ -212,7 +221,8 @@ public class SendEmailsService {
                             if (attachment instanceof FileAttachment){
                                 FileAttachment fileAttachment = (FileAttachment)attachment;
                                 enclosureEntity.setFileName(fileAttachment.getName());
-                                enclosureEntity.setAppendixAddress("/" +fileAttachment.getName());
+                                realPath = realPath+"files/"+fileAttachment.getName();
+                                enclosureEntity.setAppendixAddress(realPath);
                             }else {
                                 ItemAttachment itemAttachment = (ItemAttachment)attachment;
                                 itemAttachment.load();

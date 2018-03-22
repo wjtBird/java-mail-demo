@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.service.AccessService;
 import com.example.demo.service.SendEmailsService;
+import com.example.utils.DocConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,10 @@ public class SendEmailTest {
         this.sendEmailsService.listItems(this.account,this.password);
     }
 
-    @Test
-    public void readMsgTest() throws Exception {
-        this.sendEmailsService.readEmail(this.account,this.password,this.id);
-    }
+//    @Test
+//    public void readMsgTest() throws Exception {
+//        this.sendEmailsService.readEmail(this.account,this.password,this.id);
+//    }
 
     //普通邮件
 //    @Test
@@ -56,6 +57,15 @@ public class SendEmailTest {
     @Test
     public void readFileMails() throws Exception {
         this.sendEmailsService.readFileMails(this.account, this.password);
+    }
+
+    //office转换成pdf
+    @Test
+    public void converter(){
+        String filePath = "E:\\workspace\\java-mail-demo\\files\\ActivityUtil类新增公共方法.docx";
+        DocConverter docConverter = new DocConverter(filePath);
+        docConverter.setFile(filePath);
+        docConverter.conver();
     }
 
 
