@@ -114,11 +114,16 @@ public class SendEmailsService {
         if (null != account && null != password){
             ExchangeUtil util = new ExchangeUtil();
             ExchangeService service = util.getService(account, password);
-            Folder inbox = Folder.bind(service, WellKnownFolderName.Inbox);
+            Folder inbox = Folder.bind(service, WellKnownFolderName.Inbox);// 收件箱
+//            Folder outbox = Folder.bind(service, WellKnownFolderName.Outbox);// 发件箱
+//            Folder deletedItems = Folder.bind(service, WellKnownFolderName.DeletedItems);// 已删除邮件
+//            Folder junkEmail = Folder.bind(service, WellKnownFolderName.JunkEmail);// 垃圾邮件
+//            Folder sentItems = Folder.bind(service,WellKnownFolderName.SentItems);// 已发送邮件
+//            Folder drafts = Folder.bind(service,WellKnownFolderName.Drafts);// 草稿
             ItemView view = new ItemView(Integer.MAX_VALUE);
             FindItemsResults<Item> findResults = service.findItems(inbox.getId(), view);
             if(null != findResults){
-              service.loadPropertiesForItems(findResults, PropertySet.FirstClassProperties);
+                service.loadPropertiesForItems(findResults, PropertySet.FirstClassProperties);
                 for (Item item : findResults) {
                     //收件人
                     String toRecipients = "";

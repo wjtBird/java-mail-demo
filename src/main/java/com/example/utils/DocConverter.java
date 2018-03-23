@@ -2,12 +2,14 @@ package com.example.utils;
 
 import com.artofsolving.jodconverter.DocumentConverter;
 import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeConnection;
+import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeException;
 import com.artofsolving.jodconverter.openoffice.connection.SocketOpenOfficeConnection;
 import com.artofsolving.jodconverter.openoffice.converter.OpenOfficeDocumentConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.net.ConnectException;
 
 
 /**
@@ -91,10 +93,9 @@ public class DocConverter {
 	}
 
 	/**
-	 *  转为html
-	 *
+	 *  office文件转为html文件
 	 */
-	private void doc2html() throws Exception {
+	private void officeToHtml() throws Exception {
 		if (docFile.exists()) {
 			if (!htmlFile.exists()) {
 				OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100);
@@ -103,24 +104,24 @@ public class DocConverter {
 					DocumentConverter converter = new OpenOfficeDocumentConverter(connection);
 					converter.convert(docFile, htmlFile);
 					connection.disconnect();
-					LOGGER.info("****html转换成功，html输出： "+ htmlFile.getPath() + "****");
-				} catch (java.net.ConnectException e) {
+					LOGGER.info("html转换成功，html输出文件地址： "+ htmlFile.getPath());
+				} catch (ConnectException e) {
 					e.printStackTrace();
-					LOGGER.info("****html转换器异常，openoffice 服务未启动！****");
+					LOGGER.info("html转换器异常，openoffice 服务未启动！");
 					throw e;
-				} catch (com.artofsolving.jodconverter.openoffice.connection.OpenOfficeException e) {
+				} catch (OpenOfficeException e) {
 					e.printStackTrace();
-					LOGGER.info("****html转换器异常，读取转换文件 失败****");
+					LOGGER.info("html转换器异常，读取转换文件 失败");
 					throw e;
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw e;
 				}
 			} else {
-				LOGGER.info("****已经转换为html，不需要再进行转化 ****");
+				LOGGER.info("已经转换为html文件，不需要再进行转化");
 			}
 		} else {
-			LOGGER.info("****html转换器异常，需要转换的文档不存在， 无法转换****");
+			LOGGER.info("html转换器异常，需要转换的文档不存在， 无法转换");
 		}
 	}
 
@@ -130,7 +131,7 @@ public class DocConverter {
 	@SuppressWarnings("unused")
 	public void conver() {
 		try {
-			doc2html();
+			officeToHtml();
 		} catch (Exception e) {
 			  e.printStackTrace();
 		}
