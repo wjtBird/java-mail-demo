@@ -1,16 +1,17 @@
-package com.example.demo;
+package com.sinolife.mailbusiness.service;
 
-import com.sinolife.mailbusiness.service.SendEmailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/**
+ * Created by wjt on 2018/4/3.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SendEmailTest {
-
+public class SendEmailsServiceTest {
     @Autowired
     private SendEmailsService sendEmailsService;
 
@@ -63,6 +64,5 @@ public class SendEmailTest {
 //        docConverter.setFile(filePath);
 //        docConverter.conver();
 //    }
-
 
 }

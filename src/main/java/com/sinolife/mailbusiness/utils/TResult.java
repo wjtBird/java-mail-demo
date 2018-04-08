@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.sinolife.mailbusiness.utils;
 
 import java.io.Serializable;
 

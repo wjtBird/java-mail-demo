@@ -1,38 +1,38 @@
-package com.example.demo.service;
+package com.sinolife.mailbusiness.service;
 
+import com.sinolife.base.factories.ExchangeServiceFactory;
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.PropertySet;
-import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
 import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
 import microsoft.exchange.webservices.data.core.service.folder.Folder;
 import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
 import microsoft.exchange.webservices.data.core.service.item.Item;
-import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
-import microsoft.exchange.webservices.data.credential.WebCredentials;
 import microsoft.exchange.webservices.data.property.complex.EmailAddress;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 import microsoft.exchange.webservices.data.search.ItemView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 
 @Service
 public class AccessService {
 
 
 
-    public ExchangeService getService(String account,String password) throws Exception {
-        ExchangeService exchangeService = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-        ExchangeCredentials credentials = new WebCredentials(account, password);
-        exchangeService.setCredentials(credentials);
-        exchangeService.autodiscoverUrl(account,(a)->(a.toLowerCase().startsWith("https://")));
-        return exchangeService;
-    }
+//    public ExchangeService getService(String account,String password) throws Exception {
+//        ExchangeService exchangeService = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+//        ExchangeCredentials credentials = new WebCredentials(account, password);
+//        exchangeService.setCredentials(credentials);
+//        exchangeService.autodiscoverUrl(account,(a)->(a.toLowerCase().startsWith("https://")));
+//        return exchangeService;
+//    }
+
+    @Autowired
+    private ExchangeServiceFactory serviceFactory;
 
 
     public void listFirstTenItems(String account,String password) throws Exception {
-        ExchangeService service = this.getService(account, password);
+        ExchangeService service = this.serviceFactory.getService(account, password);
         Folder inbox = Folder.bind(service, WellKnownFolderName.Inbox);
         ItemView view = new ItemView(10);
         FindItemsResults<Item> findResults = service.findItems(inbox.getId(), view);
@@ -50,7 +50,7 @@ public class AccessService {
     }
 
     public void readMeg(String account,String password) throws Exception {
-        ExchangeService service = this.getService(account, password);
+        ExchangeService service = this.serviceFactory.getService(account, password);
         Folder inbox = Folder.bind(service, WellKnownFolderName.Inbox);
         ItemView view = new ItemView(10);
         FindItemsResults<Item> findResults = service.findItems(inbox.getId(), view);
@@ -75,7 +75,7 @@ public class AccessService {
 
 
     public void sendMsg(String account,String password) throws Exception {
-        ExchangeService service = this.getService(account, password);
+        ExchangeService service = this.serviceFactory.getService(account, password);
 
         EmailMessage message = new EmailMessage(service);
 

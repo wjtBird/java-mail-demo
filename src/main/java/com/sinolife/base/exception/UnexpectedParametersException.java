@@ -1,17 +1,18 @@
-package com.example.exception;
+package com.sinolife.base.exception;
 
 import java.io.Serializable;
 
 /**
  * 不符合期望参数异常
  * Created by wjt on 13/03/2018.
+ * @author wjt
  */
-public class ParametersUnexpectedException extends RuntimeException implements Serializable {
+public class UnexpectedParametersException extends RuntimeException implements Serializable {
 
-    String majorCode;
-    String subCode;
-    String message;
-    String info = null;
+    private String majorCode;
+    private String subCode;
+    private String message;
+    private String info = null;
 
     public String getMajorCode() {
         return this.majorCode;
@@ -29,6 +30,7 @@ public class ParametersUnexpectedException extends RuntimeException implements S
         this.subCode = subCode;
     }
 
+    @Override
     public String getMessage() {
         return this.message;
     }
@@ -37,20 +39,20 @@ public class ParametersUnexpectedException extends RuntimeException implements S
         this.message = message;
     }
 
-    public ParametersUnexpectedException(Throwable cause) {
+    public UnexpectedParametersException(Throwable cause) {
         super(cause);
     }
 
-    public ParametersUnexpectedException(String msg) {
+    public UnexpectedParametersException(String msg) {
         super(msg);
         this.message = msg;
     }
 
-    public ParametersUnexpectedException(String msg, Throwable cause) {
+    public UnexpectedParametersException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
-    public ParametersUnexpectedException(String majorCode, String detailCode, String message, Throwable cause) {
+    public UnexpectedParametersException(String majorCode, String detailCode, String message, Throwable cause) {
         super(message + " 错误码[" + majorCode + "-" + detailCode + "]", cause);
         this.majorCode = majorCode;
         this.subCode = detailCode;
@@ -58,7 +60,7 @@ public class ParametersUnexpectedException extends RuntimeException implements S
         this.info = message;
     }
 
-    public ParametersUnexpectedException(String majorCode, String detailCode, String message) {
+    public UnexpectedParametersException(String majorCode, String detailCode, String message) {
         super(message + " 错误码[" + majorCode + "-" + detailCode + "]");
         this.majorCode = majorCode;
         this.subCode = detailCode;

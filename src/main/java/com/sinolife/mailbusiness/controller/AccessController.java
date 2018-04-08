@@ -1,11 +1,8 @@
-package com.example.demo.web;
+package com.sinolife.mailbusiness.controller;
 
-import com.example.demo.service.AccessService;
+import com.sinolife.mailbusiness.service.AccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.Map;
 
 @Controller
 public class AccessController {

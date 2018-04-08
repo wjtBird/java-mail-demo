@@ -1,0 +1,116 @@
+Appenders:
+    Console:  #输出到控制台
+      name: CONSOLE #Appender命名
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"
+    RollingFile: # 输出到文件，超过256MB归档
+        name: ROLLING_FILE
+        ignoreExceptions: false
+        fileName: /mwbase/applogs/rtlog/maildemo/common-all.log
+        filePattern: "/mwbase/applogs/arslog/maildemo/$${date:yyyy-MM}/common-all -%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: "256 MB"
+        DefaultRolloverStrategy:
+          max: 1000
+Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: CONSOLE
+    Logger: #单独设置某些包的输出级别
+      - name: app.com.kenho.mapper #复数加上-
+        additivity: false #去除重复的log
+        level: trace
+        AppenderRef:
+          - ref: CONSOLE #复数加上-
+          - ref: ROLLING_FILE #复数加上-
+
+#
+#log4j.rootCategory=INFO, stdout,common-all,common-warn,common-error
+#
+#LOG_BASE=/mwbase/applogs/rtlog/maildemo
+#
+#
+#log4j.appender.stdout.layout.ConversionPattern=%d %p [%c] - %m%n
+#
+#
+#log4j.logger.com.ibatis=debug
+#log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=debug
+#log4j.logger.com.ibatis.common.jdbc.ScriptRunner=debug
+#log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=debug
+#log4j.logger.java.sql.Connection=debug
+#log4j.logger.java.sql.Statement=debug
+#log4j.logger.java.sql.PreparedStatement=debug,stdout
+#
+#log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+#log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+#log4j.appender.stdout.layout.conversionPattern= %d  %-5p %t %c  [%X{CurrentUser}/%X{RemoteAddr}/%X{RequestURL}]   %m%n
+#
+#
+#
+#
+#log4j.appender.common-all=org.apache.log4j.DailyRollingFileAppender
+#log4j.appender.common-all.file=${LOG_BASE}/common-all.log
+#log4j.appender.common-all.layout=org.apache.log4j.PatternLayout
+#log4j.appender.common-all.layout.conversionPattern= %d  %-5p %t %c  [%X{CurrentUser}/%X{RemoteAddr}/%X{RequestURL}]  %m%n
+#
+#
+#
+#log4j.appender.common-warn=org.apache.log4j.DailyRollingFileAppender
+#log4j.appender.common-warn.file=${LOG_BASE}/common-warn.log
+#log4j.appender.common-warn.layout=org.apache.log4j.PatternLayout
+#log4j.appender.common-warn.threshold=WARN
+#log4j.appender.common-warn.layout.conversionPattern= %d  %-5p %t %c  [%X{CurrentUser}/%X{RemoteAddr}/%X{RequestURL}]  %m%n
+#
+#
+#log4j.appender.common-error=org.apache.log4j.DailyRollingFileAppender
+#log4j.appender.common-error.file=${LOG_BASE}/common-error.log
+#log4j.appender.common-error.layout=org.apache.log4j.PatternLayout
+#log4j.appender.common-error.threshold=ERROR
+#log4j.appender.common-error.layout.conversionPattern= %d  %-5p %t %c  [%X{CurrentUser}/%X{RemoteAddr}/%X{RequestURL}]  %m%n
+#
+#
+#
+#log4j.appender.login-audit=org.apache.log4j.DailyRollingFileAppender
+#log4j.appender.login-audit.file=${LOG_BASE}/login-audit.log
+#log4j.appender.login-audit.layout=org.apache.log4j.PatternLayout
+#log4j.appender.login-audit.layout.conversionPattern= %d  %-5p %t %c  [%X{CurrentUser}/%X{RemoteAddr}/%X{RequestURL}]  %m%n
+#
+#
+#
+#log4j.appender.datasource=org.apache.log4j.DailyRollingFileAppender
+#log4j.appender.datasource.file=${LOG_BASE}/datasource.log
+#log4j.appender.datasource.layout=org.apache.log4j.PatternLayout
+#log4j.appender.datasource.layout.conversionPattern= %d  %-5p %t %c  [%X{CurrentUser}/%X{RemoteAddr}/%X{RequestURL}]   %m%n
+#
+#
+#
+#
+#log4j.logger.org.springframework=INFO
+#
+#log4j.logger.com.sinolife=INFO
+#
+#log4j.logger.net.sf.ehcache=ERROR
+#
+#
+#
+#
+#log4j.logger.APM_LOG=ERROR,APM_LOG,common-all
+#log4j.logger.com.sinolife.sf.login.audit=INFO,common-all,login-audit
+#log4j.logger.com.sinolife.sf.rpc.http.skeleton.audit=INFO,common-all,rpc-audit
+#log4j.logger.com.sinolife.sf.rpc.http.stub.audit=INFO,rpc-stub-audit
+#log4j.logger.com.mchange=INFO,common-all,datasource
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#

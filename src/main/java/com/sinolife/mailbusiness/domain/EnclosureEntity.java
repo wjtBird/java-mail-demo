@@ -1,12 +1,14 @@
-package com.example.demo.entity;
+package com.sinolife.mailbusiness.domain;
 
 /**
  * 附件实体类
  */
 public class EnclosureEntity {
+    //附件名称
+    private String fileName;
+    //附件地址
+    private String appendixAddress;
 
-    private String fileName; //附件名称
-    private String appendixAddress; //附件地址
 
     public String getFileName() {
         return fileName;

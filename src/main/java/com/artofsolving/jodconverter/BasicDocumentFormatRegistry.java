@@ -23,6 +23,7 @@ public class BasicDocumentFormatRegistry implements DocumentFormatRegistry {
         return this.documentFormats;
     }
 
+    @Override
     public DocumentFormat getFormatByFileExtension(String extension) {
         if (extension == null) {
             return null;
@@ -52,6 +53,7 @@ public class BasicDocumentFormatRegistry implements DocumentFormatRegistry {
         }
     }
 
+    @Override
     public DocumentFormat getFormatByMimeType(String mimeType) {
         Iterator it = this.documentFormats.iterator();
 

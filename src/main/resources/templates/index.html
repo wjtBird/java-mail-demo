@@ -46,7 +46,8 @@
                         <p>发件人：<span id="sender"></span></p>
                         <p>收件人：<span id="addressee"></span></p>
                         <p>抄送：<span id="cc"></span></p>
-                        <p id="enclosure" style="border-top:1px solid #ddd;border-bottom:1px solid #ddd;width: 100%;padding: 5px"></p>
+                        <p id="enclosure"
+                           style="border-top:1px solid #ddd;border-bottom:1px solid #ddd;width: 100%;padding: 5px"></p>
                     </div>
                     <div id="contents">
 
@@ -117,9 +118,9 @@
                 if (data.data != null) {
                     var html = "";
                     $("#contents").html(data.data.content);
-                    html +="附件：";
+                    html += "附件：";
                     $.each(data.data.enclosureList, function (index, item1) {
-                        html +='<span><a href="/download?fileName='+item1.fileName+'">'+item1.fileName+'</a></span>';
+                        html += '<span><a href="http://192.168.1.21:8088/?furl=http://192.168.1.42:8080/download?fileName=' + item1.fileName + '">' + item1.fileName + '</a></span>';
                     });
                     $("#enclosure").html(html);
                 }
@@ -137,9 +138,9 @@
                 if (data.data != null) {
                     var html = "";
                     $("#contents").html(data.data.content);
-                    html +="附件：";
+                    html += "附件：";
                     $.each(data.data.enclosureList, function (index, item1) {
-                        html +='<span><a href="/download">'+item1.fileName+'</a></span>';
+                        html += '<span><a href="/download">' + item1.fileName + '</a></span>';
                     });
                     $("#enclosure").html(html);
                 }

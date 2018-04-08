@@ -1,22 +1,29 @@
-package com.example.demo.entity;
-
-import org.springframework.web.multipart.MultipartFile;
+package com.sinolife.mailbusiness.domain;
 
 import java.util.List;
 
 public class EmailEntity {
+    //
+    private String id;
+    //发件人
+    private String sender;
+    //收件人
+    private String addressee;
+    //抄送人
+    private String cc;
+    //密送人
+    private String bcc;
+    //主题
+    private String subject;
+    //接收时间
+    private String dateTimeReceived;
+    //内容
+    private String content;
+    //附件
+    List<EnclosureEntity> enclosureList;
+    //是否已读
+    private boolean isRead;
 
-    private String id; //
-    private String sender; //发件人
-    private String addressee; //收件人
-    private String cc; //抄送人
-    private String bcc; //密送人
-    private String subject; //主题
-    private String dateTimeReceived; //接收时间
-    private String content; //内容
-    List<EnclosureEntity> enclosureList; //附件
-//    private MultipartFile[] files;
-    private boolean isRead; //是否已读
 
     public String getSender() {
         return sender;
