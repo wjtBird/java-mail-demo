@@ -10,3 +10,12 @@ spring:
     view:
       prefix: "/WEB-INF/views"
       suffix: ".html"
+
+logging:
+  level:
+    org.springframework.web: info
+    com.sinolife: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: /mwbase/applogs/rtlog/maildemo/common-all.log
